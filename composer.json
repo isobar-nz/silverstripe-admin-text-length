@@ -1,0 +1,24 @@
+{
+  "name": "littlegiant/silverstripe-admin-text-length",
+  "type": "silverstripe-vendormodule",
+  "require": {
+    "silverstripe/vendor-plugin": "^1.0",
+    "silverstripe/admin": "^1.0"
+  },
+  "authors": [
+    {
+      "name": "Harsh Chokshi",
+      "email": "harsh.chokshi@littlegiant.co.nz"
+    }
+  ],
+  "extra": {
+    "expose": [
+      "client/dist"
+    ]
+  },
+  "autoload": {
+    "psr-4": {
+      "LittleGiant\\AdminTextLength\\": "src/"
+    }
+  }
+}

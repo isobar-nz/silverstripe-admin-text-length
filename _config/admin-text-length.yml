@@ -1,0 +1,7 @@
+SilverStripe\Admin\LeftAndMain:
+  extensions:
+    - LittleGiant\AdminTextLength\LeftAndMainExtension
+
+SilverStripe\ORM\DataObject:
+  extensions:
+    - LittleGiant\AdminTextLength\DataObjectExtension

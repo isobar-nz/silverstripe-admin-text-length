@@ -1,0 +1,37 @@
+div.char-counted-field-holder {
+  &.input-group .btn {
+    order: 3;
+  }
+
+  input.char-counted-counter {
+    border-left: none !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+
+    order: 2;
+    font-size: 0.85em;
+    text-align: right;
+    max-width: 11.5% !important;
+
+    &-max {
+      background-color: #fae8e9 !important;
+    }
+
+    &-almost-max {
+      background-color: #fefbdb !important;
+    }
+
+    &-focus {
+      color: #566b8d;
+      border-color: #66afe9;
+      -webkit-box-shadow: rgba(102, 175, 233, .6);
+      box-shadow: rgba(102, 175, 233, .6);
+    }
+  }
+
+  input.char-counted-field {
+    border-right: none !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+}
