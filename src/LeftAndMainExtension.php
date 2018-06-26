@@ -11,6 +11,7 @@ use SilverStripe\View\Requirements;
  */
 class LeftAndMainExtension extends SSLeftAndMainExtension
 {
+    const LENGTH_HINT_ATTRIBUTE = 'data-hint-maxlength';
     const MODULE_ASSET_PREFIX = 'littlegiant/silverstripe-admin-text-length: ';
 
     /**

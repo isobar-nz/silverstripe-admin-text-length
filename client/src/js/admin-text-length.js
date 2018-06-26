@@ -4,6 +4,8 @@ const counterClass = 'char-counted-counter';
 const counterFocusClass = 'char-counted-counter-focus';
 const counterMaxClass = 'char-counted-counter-max';
 const counterAlmostMaxClass = 'char-counted-counter-almost-max';
+const lengthHintAttribute = 'data-hint-maxlength';
+const lengthNoHintAttribute = 'data-no-hint-maxlength';
 
 class AdminTextLength {
   constructor(input) {
@@ -11,8 +13,8 @@ class AdminTextLength {
     this.input = input;
     this.message = messageElement;
 
+    messageElement.setAttribute('disabled', 'true');
     messageElement.classList.add(counterClass, 'text');
-    messageElement.addEventListener('focus', () => input.focus());
 
     input.insertAdjacentElement('afterEnd', messageElement);
     input.parentNode.classList.add(countedFieldHolderClass, 'input-group');
@@ -24,7 +26,7 @@ class AdminTextLength {
   }
 
   updateCharacterCount() {
-    const maxLength = this.input.getAttribute('maxlength');
+    const maxLength = this.input.getAttribute(lengthHintAttribute) || this.input.getAttribute('maxlength');
     const {length} = this.input.value;
 
     this.message.value = `${length}/${maxLength}`;
@@ -38,10 +40,16 @@ class AdminTextLength {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const inputs = document.querySelectorAll('input[maxlength]');
+function initCounters() {
+  const inputs = document.querySelectorAll(`input[maxlength], input[${lengthHintAttribute}]`);
   inputs.forEach((e) => {
+    if (e.hasAttribute(lengthNoHintAttribute) || e.parentElement.querySelector(counterClass) !== null) {
+      return;
+    }
+
     const counter = new AdminTextLength(e);
     counter.updateCharacterCount();
   });
-});
+}
+
+document.addEventListener('DOMContentLoaded', initCounters);
