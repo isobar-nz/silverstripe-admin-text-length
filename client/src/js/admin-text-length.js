@@ -8,48 +8,45 @@ const counterAlmostMaxClass = 'char-counted-counter-almost-max';
 // This should be reflected in src/TextFieldExtension.php constant LENGTH_HINT_ATTRIBUTE
 const lengthHintAttribute = 'data-hint-length';
 
-class AdminTextLength {
-  constructor(input) {
-    const messageElement = document.createElement('input');
-    this.input = input;
-    this.message = messageElement;
+(function($) {
+  $.entwine('lg.lengthhint', function($){
 
-    messageElement.setAttribute('disabled', 'true');
-    messageElement.classList.add(counterClass, 'text');
+    $(`input[${lengthHintAttribute}]`).entwine({
+      getCounter: function() {
+        return $(this).siblings(`.${counterClass}`).first();
+      },
+      updateCount: function() {
+        const field = $(this);
+        const countEl = this.getCounter();
+        if (!countEl) return;
 
-    input.insertAdjacentElement('afterEnd', messageElement);
-    input.parentNode.classList.add(countedFieldHolderClass, 'input-group');
-    input.classList.add(countedFieldClass);
+        const charCount = field.val().length;
+        const hintCount = field.attr(lengthHintAttribute);
+        countEl.val(`${charCount}/${hintCount}`);
 
-    input.addEventListener('focus', () => messageElement.classList.add(counterFocusClass));
-    input.addEventListener('blur', () => messageElement.classList.remove(counterFocusClass));
-    input.addEventListener('input', this.updateCharacterCount.bind(this));
-  }
-
-  updateCharacterCount() {
-    const maxLength = parseInt(this.input.getAttribute(lengthHintAttribute));
-    const {length} = this.input.value;
-
-    this.message.value = `${length}/${maxLength}`;
-    this.message.classList.remove(counterMaxClass, counterAlmostMaxClass);
-
-    if (length >= maxLength) {
-      this.message.classList.add(counterMaxClass);
-    } else if (length / maxLength >= 0.8) {
-      this.message.classList.add(counterAlmostMaxClass);
-    }
-  }
-}
-
-function initCounters() {
-  document.querySelectorAll(`input[${lengthHintAttribute}]`).forEach((e) => {
-    if (!parseInt(e.getAttribute(lengthHintAttribute)) || e.parentElement.querySelector(counterClass) !== null) {
-      return;
-    }
-
-    const counter = new AdminTextLength(e);
-    counter.updateCharacterCount();
+        countEl.removeClass(counterMaxClass).removeClass(counterAlmostMaxClass);
+        if (charCount >= hintCount) {
+          countEl.addClass(counterMaxClass);
+        } else if (charCount / hintCount >= 0.8) {
+          countEl.addClass(counterAlmostMaxClass);
+        }
+      },
+      onadd: function() {
+        const field = $(this);
+        field.addClass(countedFieldClass);
+        field.parent().addClass(countedFieldHolderClass).addClass('input-group');
+        $(`<input type="text" class="text ${counterClass}" disabled>`).insertAfter(field);
+        this.updateCount();
+      },
+      oninput: function() {
+        this.updateCount();
+      },
+      onfocusin: function() {
+        this.getCounter().addClass(counterFocusClass);
+      },
+      onfocusout: function() {
+        this.getCounter().removeClass(counterFocusClass);
+      },
+    });
   });
-}
-
-document.addEventListener('DOMContentLoaded', initCounters);
+}(window.jQuery));
