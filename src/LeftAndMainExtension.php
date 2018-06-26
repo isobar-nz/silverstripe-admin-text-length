@@ -11,9 +11,6 @@ use SilverStripe\View\Requirements;
  */
 class LeftAndMainExtension extends SSLeftAndMainExtension
 {
-    /**
-     *
-     */
     const MODULE_ASSET_PREFIX = 'littlegiant/silverstripe-admin-text-length: ';
 
     /**
