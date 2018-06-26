@@ -1,3 +1,7 @@
 SilverStripe\Admin\LeftAndMain:
   extensions:
     - LittleGiant\AdminTextLength\LeftAndMainExtension
+
+SilverStripe\Forms\TextField:
+  extensions:
+    - LittleGiant\AdminTextLength\TextFieldExtension

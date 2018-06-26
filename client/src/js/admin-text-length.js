@@ -4,8 +4,9 @@ const counterClass = 'char-counted-counter';
 const counterFocusClass = 'char-counted-counter-focus';
 const counterMaxClass = 'char-counted-counter-max';
 const counterAlmostMaxClass = 'char-counted-counter-almost-max';
-const lengthHintAttribute = 'data-hint-maxlength';
-const lengthNoHintAttribute = 'data-no-hint-maxlength';
+
+// This should be reflected in src/TextFieldExtension.php constant LENGTH_HINT_ATTRIBUTE
+const lengthHintAttribute = 'data-hint-length';
 
 class AdminTextLength {
   constructor(input) {
@@ -26,7 +27,7 @@ class AdminTextLength {
   }
 
   updateCharacterCount() {
-    const maxLength = this.input.getAttribute(lengthHintAttribute) || this.input.getAttribute('maxlength');
+    const maxLength = parseInt(this.input.getAttribute(lengthHintAttribute));
     const {length} = this.input.value;
 
     this.message.value = `${length}/${maxLength}`;
@@ -41,9 +42,8 @@ class AdminTextLength {
 }
 
 function initCounters() {
-  const inputs = document.querySelectorAll(`input[maxlength], input[${lengthHintAttribute}]`);
-  inputs.forEach((e) => {
-    if (e.hasAttribute(lengthNoHintAttribute) || e.parentElement.querySelector(counterClass) !== null) {
+  document.querySelectorAll(`input[${lengthHintAttribute}]`).forEach((e) => {
+    if (!parseInt(e.getAttribute(lengthHintAttribute)) || e.parentElement.querySelector(counterClass) !== null) {
       return;
     }
 
