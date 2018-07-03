@@ -1,3 +1,6 @@
+---
+Name: admin-text-length
+---
 SilverStripe\Admin\LeftAndMain:
   extensions:
     - LittleGiant\AdminTextLength\LeftAndMainExtension
