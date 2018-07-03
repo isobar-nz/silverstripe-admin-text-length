@@ -15,17 +15,20 @@ class TextFieldExtension extends Extension
 
     /**
      * @param int $length
+     * @return \SilverStripe\Forms\TextField
      */
     public function setLengthHint($length)
     {
         $this->owner->setAttribute(static::LENGTH_HINT_ATTRIBUTE, $length);
+        return $this->owner;
     }
 
     /**
-     *
+     * @return \SilverStripe\Forms\TextField
      */
     public function disableLengthHint()
     {
         $this->owner->setAttribute(static::LENGTH_HINT_ATTRIBUTE, null);
+        return $this->owner;
     }
 }
